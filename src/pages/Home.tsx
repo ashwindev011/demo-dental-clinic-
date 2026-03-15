@@ -107,11 +107,11 @@ export default function Home() {
                 initial={{ y: 50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 1.2, duration: 0.8 }}
-                className="absolute bottom-8 left-8 right-8 p-8 rounded-[2rem] flex items-center justify-between backdrop-blur-3xl border border-white/20 bg-white/10 dark:bg-slate-900/40"
+                className="absolute bottom-8 left-8 right-8 p-8 rounded-[2rem] flex items-center justify-between backdrop-blur-xl border border-white/40 bg-white/60 dark:bg-white/20"
               >
                 <div>
                   <p className="text-primary text-xs font-bold uppercase tracking-widest mb-1">Next Available</p>
-                  <p className="text-white text-xl font-bold">Today, {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                  <p className="text-slate-900 dark:text-white text-xl font-bold">Today, {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                 </div>
                 <motion.div 
                   whileHover={{ scale: 1.1, rotate: 10 }}
