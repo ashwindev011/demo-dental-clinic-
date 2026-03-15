@@ -80,16 +80,23 @@ export default function Footer() {
             <li className="flex items-center justify-between p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
               <div className="flex items-center gap-3">
                 <Clock className="size-5 text-primary" />
-                <span>Mon - Fri</span>
+                <span className="text-sm font-medium">Mon - Fri</span>
               </div>
               <span className="font-bold text-slate-900 dark:text-slate-100">8:00 - 19:00</span>
             </li>
             <li className="flex items-center justify-between p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
               <div className="flex items-center gap-3">
                 <Clock className="size-5 text-primary" />
-                <span>Saturday</span>
+                <span className="text-sm font-medium">Saturday</span>
               </div>
               <span className="font-bold text-slate-900 dark:text-slate-100">9:00 - 16:00</span>
+            </li>
+            <li className="flex items-center justify-between p-4 rounded-2xl bg-slate-100/50 dark:bg-slate-900/50 border border-dashed border-slate-200 dark:border-slate-700">
+              <div className="flex items-center gap-3">
+                <Clock className="size-5 text-slate-400" />
+                <span className="text-sm font-medium">Sunday</span>
+              </div>
+              <span className="font-bold text-slate-400">Closed</span>
             </li>
           </ul>
         </motion.div>
@@ -100,20 +107,28 @@ export default function Footer() {
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          <h5 className="font-bold text-lg mb-8 uppercase tracking-widest text-slate-900 dark:text-slate-100">Location</h5>
-          <div className="rounded-[2rem] overflow-hidden mb-6 h-44 border border-primary/10 shadow-2xl group relative">
-            <img 
-              src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format,compress&fit=crop&q=75&w=800" 
-              alt="Map" 
-              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-125"
-              referrerPolicy="no-referrer"
-            />
-            <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors"></div>
+          <h5 className="font-bold text-lg mb-8 uppercase tracking-widest text-slate-900 dark:text-slate-100">Contact & Location</h5>
+          <div className="space-y-6">
+            <div className="rounded-[2rem] overflow-hidden h-32 border border-primary/10 shadow-2xl group relative">
+              <img 
+                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format,compress&fit=crop&q=75&w=800" 
+                alt="Map" 
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-125"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors"></div>
+            </div>
+            <div className="space-y-4">
+              <p className="text-sm text-slate-500 dark:text-slate-400 flex items-start gap-4 font-light">
+                <MapPin className="size-5 text-primary shrink-0" />
+                122 Crystal Blvd, Medical Plaza 4, Zurich
+              </p>
+              <a href="tel:+1234567890" className="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-4 font-light hover:text-primary transition-colors">
+                <Phone className="size-5 text-primary shrink-0" />
+                +1 (234) 567-890
+              </a>
+            </div>
           </div>
-          <p className="text-base text-slate-500 dark:text-slate-400 flex items-start gap-4 font-light">
-            <MapPin className="size-6 text-primary shrink-0" />
-            122 Crystal Blvd, Medical Plaza 4, Zurich
-          </p>
         </motion.div>
       </div>
       

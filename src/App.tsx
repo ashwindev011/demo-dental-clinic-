@@ -42,7 +42,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <AnimatedRoutes />
+      <div className="md:pl-20 lg:pl-0 transition-all duration-300">
+        <AnimatedRoutes />
+      </div>
       <FloatingCallButton />
     </BrowserRouter>
   );
