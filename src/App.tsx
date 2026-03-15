@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence } from 'motion/react';
 import Navbar from './components/Navbar';
 import FloatingCallButton from './components/FloatingCallButton';
@@ -20,6 +21,15 @@ import PageTransition from './components/PageTransition';
 
 function AnimatedRoutes() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Redirect to home page on initial load (refresh) if not already there
+    if (location.pathname !== '/') {
+      navigate('/');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <AnimatePresence mode="wait">
@@ -42,9 +52,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <div className="md:pl-20 lg:pl-0 transition-all duration-300">
-        <AnimatedRoutes />
-      </div>
+      <AnimatedRoutes />
       <FloatingCallButton />
     </BrowserRouter>
   );
