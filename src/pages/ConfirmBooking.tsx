@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 export default function ConfirmBooking() {
   const navigate = useNavigate();
@@ -90,6 +91,7 @@ export default function ConfirmBooking() {
         </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

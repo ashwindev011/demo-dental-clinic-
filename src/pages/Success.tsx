@@ -1,4 +1,5 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 export default function Success() {
   const navigate = useNavigate();
@@ -102,6 +103,7 @@ export default function Success() {
           <div className="h-2 w-full bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

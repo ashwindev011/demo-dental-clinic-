@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Image as ImageIcon, Sparkles } from 'lucide-react';
+import Footer from '../components/Footer';
 
 const fadeIn = {
   initial: { opacity: 0, y: 30 },
@@ -19,10 +20,13 @@ export default function Gallery() {
   const images = [
     { id: 1, url: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=800', title: 'Modern Clinic' },
     { id: 2, url: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=800', title: 'Advanced Technology' },
-    { id: 3, url: 'https://images.unsplash.com/photo-1598256989800-fea5ce5146f2?auto=format&fit=crop&q=80&w=800', title: 'Comfortable Waiting Area' },
-    { id: 4, url: 'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&q=80&w=800', title: 'Expert Care' },
-    { id: 5, url: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=800', title: 'Friendly Staff' },
-    { id: 6, url: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=800', title: 'Bright Smiles' },
+    { id: 3, url: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=800', title: 'Comfortable Waiting Area' },
+    { id: 4, url: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800', title: 'Patient Lounge' },
+    { id: 5, url: 'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&q=80&w=800', title: 'Expert Care' },
+    { id: 6, url: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=800', title: 'Friendly Staff' },
+    { id: 7, url: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=800', title: 'Bright Smiles' },
+    { id: 8, url: 'https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&q=80&w=800', title: 'Relaxing Environment' },
+    { id: 9, url: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800', title: 'Sterilization Center' },
   ];
 
   return (
@@ -91,6 +95,7 @@ export default function Gallery() {
           ))}
         </motion.div>
       </main>
+      <Footer />
     </div>
   );
 }

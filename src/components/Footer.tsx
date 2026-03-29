@@ -133,7 +133,11 @@ export default function Footer() {
       </div>
       
       <div className="max-w-7xl mx-auto px-4 mt-24 pt-10 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-8 text-sm text-slate-500">
-        <p>© {new Date().getFullYear()} Lumina Dental Care. All rights reserved.</p>
+        <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4">
+          <p>© {new Date().getFullYear()} Lumina Dental Care. All rights reserved.</p>
+          <span className="hidden md:inline text-slate-300 dark:text-slate-700">|</span>
+          <p className="font-medium text-primary/80 italic">website Designed by Ashwin dev</p>
+        </div>
         <div className="flex gap-10">
           <Link className="hover:text-primary transition-colors" to="/">Privacy Policy</Link>
           <Link className="hover:text-primary transition-colors" to="/">Terms of Service</Link>

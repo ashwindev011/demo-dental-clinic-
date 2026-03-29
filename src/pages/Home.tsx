@@ -1,6 +1,6 @@
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'motion/react';
-import { useRef } from 'react';
 import { 
   Calendar, 
   Stethoscope, 
@@ -47,6 +47,28 @@ export default function Home() {
     target: containerRef,
     offset: ["start start", "end end"]
   });
+
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000); // Update every minute
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatNextAvailable = (date: Date) => {
+    const hours = date.getHours();
+    // If it's after 6 PM, show tomorrow morning
+    if (hours >= 18) {
+      const tomorrow = new Date(date);
+      tomorrow.setDate(date.getDate() + 1);
+      return `Tomorrow, 09:00 AM`;
+    }
+    // Otherwise show current time
+    return `Today, ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+  };
 
   const blob1Y = useTransform(scrollYProgress, [0, 1], [0, -200]);
   const blob2Y = useTransform(scrollYProgress, [0, 1], [0, 200]);
@@ -103,23 +125,33 @@ export default function Home() {
                 </div>
               </motion.div>
 
-              <motion.div 
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1.2, duration: 0.8 }}
-                className="absolute bottom-8 left-8 right-8 p-8 rounded-[2rem] flex items-center justify-between backdrop-blur-xl border border-white/40 bg-white/60 dark:bg-white/20"
-              >
-                <div>
-                  <p className="text-primary text-xs font-bold uppercase tracking-widest mb-1">Next Available</p>
-                  <p className="text-slate-900 dark:text-white text-xl font-bold">Today, {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                </div>
+              <Link to="/book">
                 <motion.div 
-                  whileHover={{ scale: 1.1, rotate: 10 }}
-                  className="size-14 rounded-2xl bg-primary flex items-center justify-center text-white shadow-xl shadow-primary/40 cursor-pointer"
+                  initial={{ y: 50, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 1.2, duration: 0.8 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="absolute bottom-8 left-8 right-8 p-8 rounded-[2rem] flex items-center justify-between backdrop-blur-xl border border-white/40 bg-white/60 dark:bg-white/20 cursor-pointer group"
                 >
-                  <CheckCircle2 className="size-7" />
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <p className="text-primary text-xs font-bold uppercase tracking-widest">Next Available</p>
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                      </span>
+                    </div>
+                    <p className="text-slate-900 dark:text-white text-xl font-bold">{formatNextAvailable(currentTime)}</p>
+                  </div>
+                  <motion.div 
+                    whileHover={{ scale: 1.1, rotate: 10 }}
+                    className="size-14 rounded-2xl bg-primary flex items-center justify-center text-white shadow-xl shadow-primary/40"
+                  >
+                    <CheckCircle2 className="size-7" />
+                  </motion.div>
                 </motion.div>
-              </motion.div>
+              </Link>
             </div>
           </motion.div>
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+import Footer from '../components/Footer';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -187,6 +188,7 @@ export default function Contact() {
           )}
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

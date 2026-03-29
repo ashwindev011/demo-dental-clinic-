@@ -1,13 +1,26 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Footer from '../components/Footer';
 
 export default function Book() {
   const navigate = useNavigate();
-  const today = new Date();
+  const [today, setToday] = useState(new Date());
+  
+  useEffect(() => {
+    // Update today's date every minute to handle day transitions
+    const timer = setInterval(() => {
+      const now = new Date();
+      if (now.getDate() !== today.getDate()) {
+        setToday(now);
+      }
+    }, 60000);
+    return () => clearInterval(timer);
+  }, [today]);
+
   const currentMonth = today.toLocaleString('default', { month: 'long' });
   const currentYear = today.getFullYear();
   
-  const [selectedDay, setSelectedDay] = useState(today.getDate());
+  const [selectedDate, setSelectedDate] = useState(today);
   const [selectedTime, setSelectedTime] = useState('10:30 AM');
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -18,7 +31,7 @@ export default function Book() {
 
   // Generate next 14 days starting from today
   const days = Array.from({ length: 14 }, (_, i) => {
-    const date = new Date();
+    const date = new Date(today);
     date.setDate(today.getDate() + i);
     return date;
   });
@@ -29,7 +42,11 @@ export default function Book() {
     const formUrl = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSflLqfLuxfZAP8xi4rFSe_e-kE97L1fsmnfZMqkoF9yw0Dg9g/formResponse';
     const formData = new FormData();
     
-    const formattedDate = `${currentMonth} ${selectedDay}, ${currentYear}`;
+    const formattedDate = selectedDate.toLocaleDateString('en-US', { 
+      month: 'long', 
+      day: 'numeric', 
+      year: 'numeric' 
+    });
     
     // Mapping entries from the provided Google Form HTML
     formData.append('entry.193007628', formattedDate);
@@ -89,7 +106,7 @@ export default function Book() {
             <h3 className="text-slate-900 dark:text-slate-100 text-lg font-bold">Select Date</h3>
             <div className="flex items-center gap-2 glass-effect px-3 py-1 rounded-full">
               <span className="material-symbols-outlined text-primary text-sm">calendar_month</span>
-              <span className="text-xs font-medium text-slate-300">{currentMonth.substring(0, 3)} {currentYear}</span>
+              <span className="text-xs font-medium text-slate-300">{selectedDate.toLocaleString('default', { month: 'short' })} {selectedDate.getFullYear()}</span>
             </div>
           </div>
           <div className="glass-effect rounded-xl p-4 shadow-xl">
@@ -97,7 +114,7 @@ export default function Book() {
               <button className="size-8 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
                 <span className="material-symbols-outlined text-slate-500 dark:text-slate-400">chevron_left</span>
               </button>
-              <p className="text-slate-900 dark:text-slate-100 text-sm font-bold uppercase tracking-widest">{currentMonth}</p>
+              <p className="text-slate-900 dark:text-slate-100 text-sm font-bold uppercase tracking-widest">{selectedDate.toLocaleString('default', { month: 'long' })}</p>
               <button className="size-8 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
                 <span className="material-symbols-outlined text-slate-500 dark:text-slate-400">chevron_right</span>
               </button>
@@ -114,15 +131,16 @@ export default function Book() {
               {days.map((date, i) => {
                 const day = date.getDate();
                 const isSunday = date.getDay() === 0;
+                const isSelected = selectedDate.toDateString() === date.toDateString();
                 return (
                   <button
                     key={i}
                     disabled={isSunday}
-                    onClick={() => setSelectedDay(day)}
+                    onClick={() => setSelectedDate(date)}
                     className={`h-10 flex items-center justify-center rounded-lg text-sm transition-all ${
                       isSunday
                         ? 'text-slate-600 cursor-not-allowed opacity-50'
-                        : selectedDay === day
+                        : isSelected
                         ? 'bg-primary text-white font-bold shadow-[0_0_20px_rgba(37,99,235,0.3)]'
                         : 'text-slate-600 dark:text-slate-300 hover:bg-black/5 dark:hover:bg-white/5'
                     }`}
@@ -233,6 +251,7 @@ export default function Book() {
           </button>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

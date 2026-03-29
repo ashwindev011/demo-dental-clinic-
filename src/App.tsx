@@ -25,29 +25,44 @@ function AnimatedRoutes() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
+  // Redirect to home page on initial load (refresh) if not already there
   useEffect(() => {
-    // Redirect to home page on initial load (refresh) if not already there
     if (location.pathname !== '/') {
       navigate('/');
     }
-    
-    // Initial loading state
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-    
-    return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Show loader on route change
+  // Show loader on route change and wait for all images to finish loading
   useEffect(() => {
     setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
     
-    return () => clearTimeout(timer);
+    const checkImages = async () => {
+      // Small delay to allow React to render the new route's DOM
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      const images = Array.from(document.getElementsByTagName('img'));
+      
+      if (images.length === 0) {
+        // If no images, wait a tiny bit for other assets and then hide
+        setTimeout(() => setIsLoading(false), 800);
+        return;
+      }
+
+      const imagePromises = images.map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(resolve => {
+          img.addEventListener('load', resolve);
+          img.addEventListener('error', resolve); // Resolve on error too so we don't get stuck
+        });
+      });
+
+      await Promise.all(imagePromises);
+      // Small extra buffer for smooth transition after images are ready
+      setTimeout(() => setIsLoading(false), 500);
+    };
+
+    checkImages();
   }, [location.pathname]);
 
   return (
